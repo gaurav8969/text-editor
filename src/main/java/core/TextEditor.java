@@ -277,30 +277,28 @@ public class TextEditor{
             StyledDocument doc = addDocListener(textPane);
             applySyntaxHighlighting(doc);
 
-            int index = tabbedPane.getSelectedIndex();
-            if(index != -1){
-                JPanel panel = (JPanel) tabbedPane.getTabComponentAt(index);
+            JPanel panel = (JPanel) tabbedPane.getTabComponentAt(tabCount-1); //since indices are 0-indexed
 
-                JButton btn=null;
-                JLabel label=null;
+            JButton btn=null;
+            JLabel label=null;
 
-                Component[] children = panel.getComponents();
-                for(Component c: children){
-                    if(c instanceof JLabel){
-                        label = (JLabel)c;
-                        label.setText(file.getName());
-                    }
-
-                    if(c instanceof JButton){
-                        btn = (JButton)c;
-                    }
+            Component[] children = panel.getComponents();
+            for(Component c: children){
+                if(c instanceof JLabel){
+                    label = (JLabel)c;
+                    label.setText(file.getName());
                 }
 
-                Dimension labelSize = label.getPreferredSize();
-                Dimension buttonSize = btn.getPreferredSize();
-                panel.setPreferredSize(new Dimension(labelSize.width + buttonSize.width+10,
-                        Math.max(buttonSize.height,labelSize.height)));
+                if(c instanceof JButton){
+                    btn = (JButton)c;
+                }
             }
+
+            Dimension labelSize = label.getPreferredSize();
+            Dimension buttonSize = btn.getPreferredSize();
+            panel.setPreferredSize(new Dimension(labelSize.width + buttonSize.width+10,
+                    Math.max(buttonSize.height,labelSize.height)));
+
 
         }catch(IOException ex){
             ex.printStackTrace();
