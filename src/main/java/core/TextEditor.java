@@ -324,14 +324,14 @@ public class TextEditor{
         StyleContext styleContext = new StyleContext();
 
         Style defaultStyle = styleContext.addStyle("Default", null);
-        StyleConstants.setForeground(defaultStyle, Color.WHITE);
+        StyleConstants.setForeground(defaultStyle, new Color(0xC9FF00));
 
         Style keywordStyle = styleContext.addStyle("Keyword", null);
-        StyleConstants.setForeground(keywordStyle, Color.MAGENTA);
+        StyleConstants.setForeground(keywordStyle, new Color(0xF82672));
         StyleConstants.setBold(keywordStyle, true);
 
         Style numberStyle = styleContext.addStyle("Number", null);
-        StyleConstants.setForeground(numberStyle, Color.GREEN);
+        StyleConstants.setForeground(numberStyle, Color.CYAN);
 
         Style symbolStyle = styleContext.addStyle("Symbol", null);
         StyleConstants.setForeground(symbolStyle, Color.RED);
@@ -340,7 +340,7 @@ public class TextEditor{
         StyleConstants.setForeground(identifierStyle, new Color(0xFFA500));
 
         Style operatorStyle = styleContext.addStyle("Operator", null);
-        StyleConstants.setForeground(operatorStyle, Color.CYAN);
+        StyleConstants.setForeground(operatorStyle, Color.YELLOW);
 
         return styleContext;
     }

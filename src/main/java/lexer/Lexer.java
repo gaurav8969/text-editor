@@ -16,10 +16,13 @@ public class Lexer {
     private static final String OPERATOR_REGEX = "(==|!=|<=|>=|&&|\\|\\||[+\\-*/=<>!&|^?:%])";
     private static final String SYMBOL_REGEX = "[;,\\[\\](){}.<]";
     private static final String WHITESPACE_REGEX = "\\s+";
+    private static final String UNKNOWN_REGEX = ".*";
 
     private static final Pattern Token_PATTERN = Pattern.compile(
-        String.format("(?<ANNOTATION>%s)|(?<KEYWORD>%s)|(?<IDENTIFIER>%s)|(?<NUMBER>%s)|(?<OPERATOR>%s)|(?<SYMBOL>%s)|(?<WHITESPACE>%s)",
-                ANNOTATION_REGEX, KEYWORD_REGEX, IDENTIFIER_REGEX, NUMBER_REGEX, OPERATOR_REGEX, SYMBOL_REGEX, WHITESPACE_REGEX)
+        String.format("(?<ANNOTATION>%s)|(?<KEYWORD>%s)|(?<IDENTIFIER>%s)|(?<NUMBER>%s)|(?<OPERATOR>%s)|(?<SYMBOL>%s)" +
+                        "|(?<WHITESPACE>%s)|(?<UNKNOWN>%s)",
+                ANNOTATION_REGEX, KEYWORD_REGEX, IDENTIFIER_REGEX, NUMBER_REGEX, OPERATOR_REGEX, SYMBOL_REGEX,
+                WHITESPACE_REGEX, UNKNOWN_REGEX)
     );
 
     public List<Token> tokenize(String input){
@@ -41,7 +44,7 @@ public class Lexer {
                 tokens.add(new Token(TokenType.SYMBOL, matcher.group("SYMBOL"), matcher.start(), matcher.end()));
             } else if (matcher.group("WHITESPACE") != null) {
                 tokens.add(new Token(TokenType.WHITESPACE, matcher.group("WHITESPACE"), matcher.start(), matcher.end()));
-            } else {
+            } else if(matcher.group("UNKNOWN") != null){
                 tokens.add(new Token(TokenType.UNKNOWN, matcher.group(), matcher.start(), matcher.end()));
             }
         }
