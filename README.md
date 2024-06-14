@@ -1,1 +1,1 @@
-java swing text editor with intellisense
+java swing text editor with syntax highlighting
