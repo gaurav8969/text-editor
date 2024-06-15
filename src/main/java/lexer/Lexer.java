@@ -14,16 +14,16 @@ public class Lexer {
     private static final String IDENTIFIER_REGEX = "\\b([a-zA-Z_][a-zA-Z0-9_]*)\\b";
     private static final String NUMBER_REGEX = "\\b(\\d+)\\b";
     private static final String OPERATOR_REGEX = "(==|!=|<=|>=|&&|\\|\\||[+\\-*/=<>!&|^?:%])";
-    private static final String SYMBOL_REGEX = "[;,\\[\\](){}.<]";
+    private static final String SYMBOL_REGEX = "[;,\\[\\]\\(\\){}.<]";
     private static final String WHITESPACE_REGEX = "\\s+";
-    private static final String UNKNOWN_REGEX = ".*";
+    private static final String STRING_REGEX = "\"[a-zA-Z0-9_\\s\\n;,\\+\\(\\)\\[\\]{}.<>\\\\]*\"";
     private static final String FUNCTION_REGEX = "\\b([a-zA-Z_][a-zA-Z0-9_]*)\\s*(?=\\()";
 
     private static final Pattern Token_PATTERN = Pattern.compile(
-        String.format("(?<ANNOTATION>%s)|(?<KEYWORD>%s)|(?<FUNCTION>%s)|(?<IDENTIFIER>%s)|(?<NUMBER>%s)|(?<OPERATOR>%s)|(?<SYMBOL>%s)" +
-                        "|(?<WHITESPACE>%s)|(?<UNKNOWN>%s)",
-                ANNOTATION_REGEX, KEYWORD_REGEX,FUNCTION_REGEX, IDENTIFIER_REGEX, NUMBER_REGEX, OPERATOR_REGEX, SYMBOL_REGEX,
-                WHITESPACE_REGEX, UNKNOWN_REGEX)
+        String.format("(?<ANNOTATION>%s)|(?<KEYWORD>%s)|(?<FUNCTION>%s)|(?<IDENTIFIER>%s)|(?<NUMBER>%s)|(?<OPERATOR>%s)" +
+                        "|(?<STRING>%s)|(?<SYMBOL>%s)|(?<WHITESPACE>%s)",
+                ANNOTATION_REGEX, KEYWORD_REGEX,FUNCTION_REGEX, IDENTIFIER_REGEX, NUMBER_REGEX, OPERATOR_REGEX, STRING_REGEX,
+                SYMBOL_REGEX,WHITESPACE_REGEX)
     );
 
     public List<Token> tokenize(String input){
@@ -43,12 +43,12 @@ public class Lexer {
                 tokens.add(new Token(TokenType.NUMBER, matcher.group("NUMBER"), matcher.start(), matcher.end()));
             } else if(matcher.group("OPERATOR") != null){
                 tokens.add(new Token(TokenType.OPERATOR,matcher.group("OPERATOR"),matcher.start(),matcher.end()));
+            } else if(matcher.group("STRING") != null){
+                tokens.add(new Token(TokenType.STRING, matcher.group(), matcher.start(), matcher.end()));
             } else if (matcher.group("SYMBOL") != null) {
                 tokens.add(new Token(TokenType.SYMBOL, matcher.group("SYMBOL"), matcher.start(), matcher.end()));
             } else if (matcher.group("WHITESPACE") != null) {
                 tokens.add(new Token(TokenType.WHITESPACE, matcher.group("WHITESPACE"), matcher.start(), matcher.end()));
-            } else if(matcher.group("UNKNOWN") != null){
-                tokens.add(new Token(TokenType.UNKNOWN, matcher.group(), matcher.start(), matcher.end()));
             }
         }
 

@@ -6,7 +6,7 @@ public enum TokenType{
     NUMBER,
     SYMBOL,
     WHITESPACE,
-    UNKNOWN,
+    STRING,
     ANNOTATION,
     OPERATOR,
     FUNCTION
