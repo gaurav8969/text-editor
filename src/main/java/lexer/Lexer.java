@@ -16,7 +16,7 @@ public class Lexer {
     private static final String OPERATOR_REGEX = "(==|!=|<=|>=|&&|\\|\\||[+\\-*/=<>!&|^?:%])";
     private static final String SYMBOL_REGEX = "[;,\\[\\]\\(\\){}.<]";
     private static final String WHITESPACE_REGEX = "\\s+";
-    private static final String STRING_REGEX = "\"[a-zA-Z0-9_\\s\\n;,\\+\\(\\)\\[\\]{}.<>\\\\]*\"";
+    private static final String STRING_REGEX = "\".*\"";
     private static final String FUNCTION_REGEX = "\\b([a-zA-Z_][a-zA-Z0-9_]*)\\s*(?=\\()";
 
     private static final Pattern Token_PATTERN = Pattern.compile(
