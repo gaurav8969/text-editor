@@ -8,5 +8,6 @@ public enum TokenType{
     WHITESPACE,
     UNKNOWN,
     ANNOTATION,
-    OPERATOR
+    OPERATOR,
+    FUNCTION
 }

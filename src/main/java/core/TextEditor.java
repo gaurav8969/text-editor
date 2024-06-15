@@ -324,7 +324,7 @@ public class TextEditor{
         StyleContext styleContext = new StyleContext();
 
         Style defaultStyle = styleContext.addStyle("Default", null);
-        StyleConstants.setForeground(defaultStyle, new Color(0xC9FF00));
+        StyleConstants.setForeground(defaultStyle, new Color(0xFF70E2));
 
         Style keywordStyle = styleContext.addStyle("Keyword", null);
         StyleConstants.setForeground(keywordStyle, new Color(0xF82672));
@@ -341,6 +341,9 @@ public class TextEditor{
 
         Style operatorStyle = styleContext.addStyle("Operator", null);
         StyleConstants.setForeground(operatorStyle, Color.YELLOW);
+
+        Style functionStyle = styleContext.addStyle("Function", null);
+        StyleConstants.setForeground(functionStyle, new Color(0xA8D946));
 
         return styleContext;
     }
@@ -362,7 +365,9 @@ public class TextEditor{
             for (Token token : tokens) {
                 Style style = doc.getStyle("Default");
 
-                if (token.getType() == TokenType.KEYWORD) {
+                if (token.getType() == TokenType.FUNCTION) {
+                    style = doc.getStyle("Function");
+                } else if (token.getType() == TokenType.KEYWORD) {
                     style = doc.getStyle("Keyword");
                 } else if (token.getType() == TokenType.NUMBER) {
                     style = doc.getStyle("Number");

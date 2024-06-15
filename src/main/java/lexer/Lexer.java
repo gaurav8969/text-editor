@@ -17,11 +17,12 @@ public class Lexer {
     private static final String SYMBOL_REGEX = "[;,\\[\\](){}.<]";
     private static final String WHITESPACE_REGEX = "\\s+";
     private static final String UNKNOWN_REGEX = ".*";
+    private static final String FUNCTION_REGEX = "\\b([a-zA-Z_][a-zA-Z0-9_]*)\\s*(?=\\()";
 
     private static final Pattern Token_PATTERN = Pattern.compile(
-        String.format("(?<ANNOTATION>%s)|(?<KEYWORD>%s)|(?<IDENTIFIER>%s)|(?<NUMBER>%s)|(?<OPERATOR>%s)|(?<SYMBOL>%s)" +
+        String.format("(?<ANNOTATION>%s)|(?<KEYWORD>%s)|(?<FUNCTION>%s)|(?<IDENTIFIER>%s)|(?<NUMBER>%s)|(?<OPERATOR>%s)|(?<SYMBOL>%s)" +
                         "|(?<WHITESPACE>%s)|(?<UNKNOWN>%s)",
-                ANNOTATION_REGEX, KEYWORD_REGEX, IDENTIFIER_REGEX, NUMBER_REGEX, OPERATOR_REGEX, SYMBOL_REGEX,
+                ANNOTATION_REGEX, KEYWORD_REGEX,FUNCTION_REGEX, IDENTIFIER_REGEX, NUMBER_REGEX, OPERATOR_REGEX, SYMBOL_REGEX,
                 WHITESPACE_REGEX, UNKNOWN_REGEX)
     );
 
@@ -30,9 +31,11 @@ public class Lexer {
         Matcher matcher = Token_PATTERN.matcher(input);
 
         while (matcher.find()) {
-            if(matcher.group("ANNOTATION") != null){
+            if (matcher.group("FUNCTION") != null) {
+                tokens.add(new Token(TokenType.FUNCTION, matcher.group("FUNCTION"), matcher.start(),matcher.end()));
+            } else if(matcher.group("ANNOTATION") != null){
                 tokens.add(new Token(TokenType.ANNOTATION, matcher.group("ANNOTATION"), matcher.start(), matcher.end()));
-            }else if (matcher.group("KEYWORD") != null) {
+            } else if (matcher.group("KEYWORD") != null) {
                 tokens.add(new Token(TokenType.KEYWORD, matcher.group("KEYWORD"), matcher.start(),matcher.end()));
             } else if (matcher.group("IDENTIFIER") != null) {
                 tokens.add(new Token(TokenType.IDENTIFIER, matcher.group("IDENTIFIER"),matcher.start(), matcher.end()));
