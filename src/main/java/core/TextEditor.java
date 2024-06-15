@@ -340,7 +340,7 @@ public class TextEditor{
         StyleConstants.setForeground(identifierStyle, new Color(0xFFA500));
 
         Style operatorStyle = styleContext.addStyle("Operator", null);
-        StyleConstants.setForeground(operatorStyle, Color.YELLOW);
+        StyleConstants.setForeground(operatorStyle, new Color(0xFFFF00));
 
         Style functionStyle = styleContext.addStyle("Function", null);
         StyleConstants.setForeground(functionStyle, new Color(0xA8D946));
